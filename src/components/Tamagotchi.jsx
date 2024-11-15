@@ -40,18 +40,18 @@ export function Tamagotchi() {
         if (hungerStorage != null) {
             setHunger(Number(hungerStorage))
         };
-        if (happinessStorage != null) {setHappiness(Number(happinessStorage))};
-        if (healthStorage != null) {setHealth(Number(healthStorage))};
-        if (hygieneStorage != null) {setHygiene(Number(hygieneStorage))};
-        if (energyStorage != null) {setEnergy(Number(energyStorage))};
-        
-        if (cantidadHuesosStorage != null) {setHuesos(Number(cantidadHuesosStorage))};
-        if (cantidadPelotasStorage != null) {setPelotas(Number(cantidadPelotasStorage))};
-        if (cantidadCepillosStorage != null) {setCepillos(Number(cantidadCepillosStorage))};
-        if (cantidadEnergiasStorage != null) {setEnergias(Number(cantidadEnergiasStorage))};
-        
-        if (coinsStorage != null) {setCoins(Number(coinsStorage))};
-        if (levelStorage != null) {setLevel(Number(levelStorage))};
+        if (happinessStorage != null) { setHappiness(Number(happinessStorage)) };
+        if (healthStorage != null) { setHealth(Number(healthStorage)) };
+        if (hygieneStorage != null) { setHygiene(Number(hygieneStorage)) };
+        if (energyStorage != null) { setEnergy(Number(energyStorage)) };
+
+        if (cantidadHuesosStorage != null) { setHuesos(Number(cantidadHuesosStorage)) };
+        if (cantidadPelotasStorage != null) { setPelotas(Number(cantidadPelotasStorage)) };
+        if (cantidadCepillosStorage != null) { setCepillos(Number(cantidadCepillosStorage)) };
+        if (cantidadEnergiasStorage != null) { setEnergias(Number(cantidadEnergiasStorage)) };
+
+        if (coinsStorage != null) { setCoins(Number(coinsStorage)) };
+        if (levelStorage != null) { setLevel(Number(levelStorage)) };
     }, []);
 
 
@@ -69,7 +69,7 @@ export function Tamagotchi() {
         setCoins(cantidadCoins + 1);
 
         comprobarVida();
-        
+
     };
     // Función para jugar con el Tamagotchi
     const play = () => {
@@ -198,7 +198,7 @@ export function Tamagotchi() {
 
             setEnergias(cantidadEnergias + 1);
             //cantidadEnergias = cantidadCepillos + 1;
-           // alert("Cantidad energias: " + cantidadEnergias);
+            // alert("Cantidad energias: " + cantidadEnergias);
 
             setCoins(cantidadCoins - 10);
 
@@ -215,9 +215,9 @@ export function Tamagotchi() {
         // Suma 1 nivel cada minuto si ninguna barra esta en 0
         const timer1 = setInterval(() => {
 
-            
 
-            if (vivo == true){
+
+            if (vivo == true) {
                 setLevel(level + 1);
             }
 
@@ -226,7 +226,7 @@ export function Tamagotchi() {
     }, [level]);
 
     // Guardar en localStorage cada vez que cambian los valores
-    useEffect(() => {
+    /*useEffect(() => {
         console.log(hunger);
         localStorage.setItem("hunger", hunger);
         localStorage.setItem("happiness", happiness);
@@ -244,7 +244,7 @@ export function Tamagotchi() {
     }, [
         hunger, happiness, health, hygiene, energy, level, cantidadCoins,
         cantidadHuesos, cantidadPelotas, cantidadCepillos, cantidadEnergias
-    ]);
+    ]);*/
 
     // useEffect para el temporizador que reduce los niveles automáticamente
     useEffect(() => {
@@ -256,13 +256,29 @@ export function Tamagotchi() {
             setHygiene((prev) => Math.max(prev - 1, 0));
             setEnergy((prev) => Math.max(prev - 1, 0));
 
-           // comprobarVida();
+            // comprobarVida();
 
 
-        }, (3000/(level*2))); // Intervalo de 3 segundos
+            console.log(hunger);
+            localStorage.setItem("hunger", hunger);
+            localStorage.setItem("happiness", happiness);
+            localStorage.setItem("health", health);
+            localStorage.setItem("hygiene", hygiene);
+            localStorage.setItem("energy", energy);
+            localStorage.setItem("level", level);
+            localStorage.setItem("coins", cantidadCoins);
+
+            localStorage.setItem("cantidadHuesos", cantidadHuesos);
+            localStorage.setItem("cantidadPelotas", cantidadPelotas);
+            localStorage.setItem("cantidadCepillos", cantidadCepillos);
+            localStorage.setItem("cantidadEnergias", cantidadEnergias);
+            comprobarVida();
+
+        }, (3000 / (level * 2))); // Intervalo de 3 segundos
         // Cleanup: Limpia el temporizador cuando el componente se desmonta
         return () => clearInterval(timer);
-    }, []); // [] asegura que el efecto solo se ejecute una vez al montar el componente
+    }, [hunger, happiness, health, hygiene, energy, level, cantidadCoins,
+        cantidadHuesos, cantidadPelotas, cantidadCepillos, cantidadEnergias]); // [] asegura que el efecto solo se ejecute una vez al montar el componente
 
     // Función para determinar el color de las barras de progreso
     const getProgressColor = (value) => {
@@ -282,7 +298,7 @@ export function Tamagotchi() {
         return "¡Estoy feliz! 😊😊";
     };
     //function (comprobar)
-    function gameOver () {
+    function gameOver() {
         alert("Game Over");
 
         setHunger(100);
@@ -298,14 +314,14 @@ export function Tamagotchi() {
         setVivo(true);
         setLevel(1);
 
-        
+
 
     }
 
     function comprobarVida() {
         console.log("Entra en la funcion comprobarVida()");
         console.log(hunger, happiness, health, hygiene, energy)
-        if (hunger == 0 || happiness == 0 || health == 0 || hygiene == 0 || energy == 0){
+        if (hunger == 0 || happiness == 0 || health == 0 || hygiene == 0 || energy == 0) {
             console.log("Entra en el if");
             setVivo(false);
             gameOver();
